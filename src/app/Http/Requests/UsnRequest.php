@@ -11,8 +11,7 @@ class UsnRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
-    {
+    public function authorize() {
         return true;
     }
 
@@ -21,12 +20,11 @@ class UsnRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            'manufacturer'=>'required|string|max:255',
-            'part_number'=>'required|string|max:255',
-            'serial_number'=>'required|string|max:255'
+            'manufacturer'  => 'required|string|max:255',
+            'part_number'   => 'required|string|max:255',
+            'serial_number' => 'required|string|max:255'
         ];
     }
 }

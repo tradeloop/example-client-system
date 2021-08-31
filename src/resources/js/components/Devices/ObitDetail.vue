@@ -60,15 +60,15 @@
 
         <table v-if="obit != null" class="table table-bordered mt-5">
             <tbody>
-            <tr  v-show="obit.obada_hash !== ''">
+            <tr  v-show="obit.checksum !== ''">
                 <td>
                     Exists on Blockchain. <a  v-bind:href="'https://gateway.obada.io/obits/'+obit.obitDID">Click to View.</a>
                 </td>
             </tr>
-            <tr  v-show="obit.root_hash != obit.obada_hash">
+            <tr  v-show="obit.checksum != obit.checksum">
                 <td>
                     <button class="btn btn-primary btn-round" @click="syncData">UPLOAD TO BLOCKCHAIN</button>
-                    <button v-show="obit.obada_hash != ''" class="btn btn-primary btn-round" @click="downloadObit">DOWNLOAD FROM BLOCKCHAIN</button>
+                    <button v-show="obit.checksum != ''" class="btn btn-primary btn-round" @click="downloadObit">DOWNLOAD FROM BLOCKCHAIN</button>
                 </td>
             </tr>
             <tr  v-if="obit.device != null">

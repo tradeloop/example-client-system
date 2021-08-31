@@ -86,10 +86,10 @@ export default {
                     {
                         sortable: true,
                         "render": function (data, type, full, meta) {
-                            if(full.local_hash === '' || full.local_hash === null) {
+                            if(full.local_checksum === '' || full.local_checksum === null) {
                                 return '-';
                             }
-                            var localHash = full.local_hash;
+                            var localHash = full.local_checksum;
                             var displayString = localHash.substr(localHash.length - 8);
 
                             var displayString = '<span class="'+(localHash != full.root_hash?'text-danger':'')+'">...'+displayString+'</span>'
@@ -102,27 +102,11 @@ export default {
                     {
                         sortable: true,
                         "render": function (data, type, full, meta) {
-                            if(full.root_hash === '' || full.root_hash === null) {
+                            if(full.obada_checksum === '' || full.obada_checksum === null) {
                                 return '-';
                             }
-                            var rootHash = full.root_hash;
-                            var displayString = rootHash.substr(rootHash.length - 8);
-
-                            var displayString = '<span class="'+(rootHash != full.obada_hash?'text-danger':'')+'">...'+displayString+'</span>'
-
-
-                            return type === 'display'?displayString+' &nbsp; <button class="btn btn-outline-primary btn-fab btn-round btn-sm btn-clipboard" data-value="'+rootHash+'"><i class="fa fa-copy"></i></button>':rootHash;
-
-                        }
-                    },
-                    {
-                        sortable: true,
-                        "render": function (data, type, full, meta) {
-                            if(full.obada_hash === '' || full.obada_hash === null) {
-                                return '-';
-                            }
-                            var displayString = full.obada_hash.substr(full.obada_hash.length - 8);
-                            var displayString = '<span class="'+(full.root_hash != full.obada_hash?'text-danger':'')+'">...'+displayString+'</span>'
+                            var displayString = full.obada_checksum.substr(full.obada_checksum.length - 8);
+                            var displayString = '<span class="'+(full.root_hash != full.obada_checksum?'text-danger':'')+'">...'+displayString+'</span>'
 
                             return type === 'display'?displayString+' &nbsp; <button class="btn btn-outline-primary btn-fab btn-round btn-sm btn-clipboard" data-value="'+full.obada_hash+'"><i class="fa fa-copy"></i></button>':full.obada_hash;
 

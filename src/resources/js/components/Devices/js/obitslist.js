@@ -96,38 +96,38 @@ export default {
                         sortable: true,
                         "render": function (data, type, full, meta) {
 
-                            var displayString = full.local_hash.substr(full.local_hash.length - 8);
+                            var displayString = full.local_checksum.substr(full.local_checksum.length - 8);
 
-                            var displayString = '<span class="'+(full.root_hash != full.local_hash?'text-danger':'')+'">...'+displayString+'</span>'
-
-
-                            return type === 'display'?displayString+' &nbsp; <button class="btn btn-outline-primary btn-fab btn-round btn-sm btn-clipboard" data-value="'+full.local_hash+'"><i class="fa fa-copy"></i></button>':full.local_hash;
-
-                        }
-                    },
-                    {
-                        sortable: true,
-                        "render": function (data, type, full, meta) {
-
-                            var displayString = full.root_hash.substr(full.root_hash.length - 8);
-
-                            var displayString = '<span class="'+(full.root_hash != full.obada_hash?'text-danger':'')+'">...'+displayString+'</span>'
+                            var displayString = '<span class="'+(full.root_hash != full.local_checksum?'text-danger':'')+'">...'+displayString+'</span>'
 
 
-                            return type === 'display'?displayString+' &nbsp; <button class="btn btn-outline-primary btn-fab btn-round btn-sm btn-clipboard" data-value="'+full.root_hash+'"><i class="fa fa-copy"></i></button>':full.root_hash;
+                            return type === 'display'?displayString+' &nbsp; <button class="btn btn-outline-primary btn-fab btn-round btn-sm btn-clipboard" data-value="'+full.local_hash+'"><i class="fa fa-copy"></i></button>':full.local_checksum;
 
                         }
                     },
                     {
                         sortable: true,
                         "render": function (data, type, full, meta) {
-                            if(full.obada_hash === '') {
+
+                            var displayString = full.checksum.substr(full.checksum.length - 8);
+
+                            var displayString = '<span class="'+(full.checksum != full.checksum?'text-danger':'')+'">...'+displayString+'</span>'
+
+
+                            return type === 'display'?displayString+' &nbsp; <button class="btn btn-outline-primary btn-fab btn-round btn-sm btn-clipboard" data-value="'+full.checksum+'"><i class="fa fa-copy"></i></button>':full.checksum;
+
+                        }
+                    },
+                    {
+                        sortable: true,
+                        "render": function (data, type, full, meta) {
+                            if(full.checksum === '') {
                                 return '-';
                             }
-                            var displayString = full.obada_hash.substr(full.obada_hash.length - 8);
-                            var displayString = '<span class="'+(full.root_hash != full.obada_hash?'text-danger':'')+'">...'+displayString+'</span>'
+                            var displayString = full.checksum.substr(full.checksum.length - 8);
+                            var displayString = '<span class="'+(full.checksum != full.checksum?'text-danger':'')+'">...'+displayString+'</span>'
 
-                            return type === 'display'?displayString+' &nbsp; <button class="btn btn-outline-primary btn-fab btn-round btn-sm btn-clipboard" data-value="'+full.obada_hash+'"><i class="fa fa-copy"></i></button>':full.obada_hash;
+                            return type === 'display'?displayString+' &nbsp; <button class="btn btn-outline-primary btn-fab btn-round btn-sm btn-clipboard" data-value="'+full.checksum+'"><i class="fa fa-copy"></i></button>':full.checksum;
 
                         }
                     },

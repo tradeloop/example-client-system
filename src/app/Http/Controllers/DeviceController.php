@@ -15,6 +15,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Obada\Api\HelperApi;
 use Obada\ClientHelper\ObitDid;
+use Obada\Entities\Obit;
+use Obada\Entities\RequestObitDID;
 
 class DeviceController extends Controller
 {
@@ -34,8 +36,13 @@ class DeviceController extends Controller
         $input = $request->input();
 
         try {
+            $request = (new RequestObitDID)
+                ->setManufacturer($input['manufacturer'])
+                ->setPartNumber($input['part_number'])
+                ->setSerialNumber($input['serial_number']);
 
-            $result = $this->helperApi->generateObitDef($input['manufacturer'], $input['part_number'], $input['serial_number']);
+            $did = ObadaClient::generateDID($request);
+            dd($did);
 
             $usn = $result['obit'];
 
@@ -191,24 +198,23 @@ class DeviceController extends Controller
 
     }
 
-
     /**
      * Returns generated USN for provided manufacturer, part_number and serial_number.
      *
+     * @param UsnRequest $request
      * @return JsonResponse
      */
-    public function generateUsn(UsnRequest $request){
-        $input = $request->input();
+    public function generateUsn(UsnRequest $request): JsonResponse {
+        $request = new RequestObitDID($request->only(['manufacturer', 'part_number', 'serial_number']));
 
         try {
-            $result = ObadaClient::generateObitDef($input['manufacturer'],$input['part_number'], $input['serial_number']);
+            $result = ObadaClient::generateDID($request);
+
             return response()->json([
-                'status' => 0,
                 'usn' => $result['obit']
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'status' => 1,
                 'errorMessage'=>$e->getMessage()
             ], 422);
         }
@@ -356,11 +362,11 @@ class DeviceController extends Controller
      */
     public function getBlockchainObit(Request $request, $obit_did){
         try {
-            $result = $this->helperApi->fetchObitFromChain($obit_did);
+            $obit = ObadaClient::get($obit_did);
 
             return response()->json([
                 'status' => 0,
-                'obit'=>$result['blockchainObit']
+                'obit' => $obit
             ], 200);
 
         } catch(\Exception $e) {
@@ -387,7 +393,10 @@ class DeviceController extends Controller
         }
 
         try {
-            $result = ObadaClient::uploadObit(new ObitDid(['obitDid'=>$request->input('obit_did')]));
+            $device = Device::where(['obit_did' => $request->input('obit_did')])->first();
+
+            ObadaClient::save($device->getLocalObit());
+
             return response()->json([
                 'status' => 0
             ], 200);
@@ -401,40 +410,6 @@ class DeviceController extends Controller
         }
 
     }
-
-    /**
-     * Creates or Updates the Client Obit with the data retrieved from the Blockchain using the Obada PHP Client Library.
-     * Takes the Obit_DID as input.
-     *
-     * @return JsonResponse
-     */
-    public function downloadObit(Request $request){
-
-        if(!$request->has('obit_did')) {
-            return response()->json([
-                'status' => 1,
-                'errorMessage'=>'Unable to find device'
-            ], 400);
-        }
-
-        try {
-            $result = $this->helperApi->fetchObitFromChain($request->input('obit_did'));
-
-            return response()->json([
-                'status' => 0,
-                'obit'=>$result['obit']
-            ], 200);
-
-        } catch(\Exception $e) {
-            Log::info($e->getMessage());
-            return response()->json([
-                'status' => 1,
-                'errorMessage'=>'Error Uploading Client Obit'
-            ], 400);
-        }
-
-    }
-
 
     public function uploadDocument(Request $request)
     {
@@ -459,145 +434,4 @@ class DeviceController extends Controller
         ], 200);
 
     }
-
-    /**
-     * Creates or Updates the Device using the Client Obit.
-     *
-     * @return JsonResponse
-     */
-    public function mapObitToDevice(Request $request){
-
-        if(!$request->has('obit_did')) {
-            return response()->json([
-                'status' => 1,
-                'errorMessage'=>'Unable to find obit'
-            ], 400);
-        }
-
-        try {
-            $result = $this->helperApi->getClientObit($request->input('obit_did'));
-            $client_obit = $result['obit'];
-        } catch(\Exception $e) {
-            Log::info($e->getMessage());
-            return response()->json([
-                'status' => 1,
-                'errorMessage'=>'Error Getting Client Obit'
-            ], 400);
-        }
-
-        $device = Device::where([
-            'obit_did'=>$request->input('obit_did')
-        ])->first();
-
-        if(!$device) {
-            $device = new Device();
-        }
-        $device->usn = $client_obit['usn'];
-        $device->obit_did = $client_obit['obitDid'];
-        $device->owner = $client_obit['ownerDid'];
-        $device->part_number = $client_obit['partNumber'];
-        $device->serial_number = $client_obit['serialNumberHash'];
-        $device->manufacturer = $client_obit['manufacturer'];
-
-        $device->save();
-
-        if($client_obit['metadata'] && is_array($client_obit['metadata'])) {
-            foreach($client_obit['metadata'] as $key=>$value) {
-
-                $metadata = $device->metadata()->where([
-                    'metadata_type_id'=>$key
-                ])->first();
-                $schema = Schema::where([
-                    'name'=>$key
-                ])->first();
-                if(!$schema) {
-                    $schema = Schema::where(['name'=>'Other'])->first();
-                }
-
-                if(!$metadata) {
-                    $metadata = new Metadata();
-                    $metadata->device_id = $device->id;
-                }
-
-                $metadata->metadata_type_id = $key;
-
-                if($schema->data_type == 'float' && is_numeric($value)) {
-                    $metadata->data_fp = $value;
-                    $metadata->data_int = null;
-                    $metadata->data_txt = null;
-                } else if($schema->data_type == 'int' && is_int($value)) {
-                    $metadata->data_fp = null;
-                    $metadata->data_int = $value;
-                    $metadata->data_txt = null;
-                } else {
-                    $metadata->data_fp = null;
-                    $metadata->data_int = null;
-                    $metadata->data_txt = $value;
-                }
-
-                $metadata->data_hash = '';
-                $metadata->save();
-            }
-        }
-
-        if($client_obit['structuredData'] && is_array($client_obit['structuredData'])) {
-            foreach($client_obit['structuredData'] as $key => $value) {
-                $structured_data = $device->structured_data()->where([
-                    'structured_data_type_id'=>$key
-                ])->first();
-
-                $schema = Schema::where([
-                    'name'=>$key
-                ])->first();
-                if(!$schema) {
-                    $schema = Schema::where(['name'=>'Other'])->first();
-                }
-
-                if(!$structured_data) {
-                    $structured_data = new StructuredData();
-                    $structured_data->device_id = $device->id;
-                }
-
-                $structured_data->structured_data_type_id = $key;
-                $structured_data->data_array = $value;
-                $structured_data->data_hash = $structured_data->getHash();
-                $structured_data->save();
-            }
-        }
-
-        if($client_obit['documents'] && is_array($client_obit['documents'])) {
-            foreach($client_obit['documents'] as $key => $value) {
-                $document = $device->documents()->where([
-                    'doc_type_id'=>$key
-                ])->first();
-
-                $schema = Schema::where([
-                    'name'=>$key
-                ])->first();
-
-                if(!$schema) {
-                    $schema = Schema::where(['name'=>'Other'])->first();
-                }
-
-                if(!$document) {
-                    $document = new Documents();
-                    $document->device_id = $device->id;
-                }
-
-                $document->doc_type_id = $key;
-                $document->doc_path = $value;
-                $document->data_hash = $document->getHash();
-                $document->save();
-            }
-        }
-
-        return response()->json([
-            'status' => 0,
-            'device'=>$device
-        ], 200);
-
-
-    }
-
-
 }

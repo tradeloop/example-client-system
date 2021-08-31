@@ -42,7 +42,7 @@
                 <div class="input-group colored">
                     <input type="text" class="form-control no-shadow is-normal"
                            disabled
-                           v-model="usn_data.obit_did"
+                           v-model="usn_data.did"
                            placeholder="Obit DID">
                 </div>
             </div>

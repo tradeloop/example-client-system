@@ -2,3 +2,5 @@
 etc
 docker-compose.yml
 vendor
+db
+supervisord.log

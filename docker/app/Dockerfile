@@ -1,7 +1,6 @@
-FROM php:fpm as base
+FROM php:7.3.30-fpm-alpine3.13 as base
 
-RUN apt update \
-	&& apt install nginx supervisor -y \
+RUN apk add nginx supervisor --no-cache \
 	&& docker-php-ext-install mysqli pdo pdo_mysql \
 	&& rm -rf /var/www && mkdir /var/www
 
@@ -33,7 +32,6 @@ RUN set -e \
 FROM base
 
 RUN mkdir -p /run/php \
-    && useradd --no-create-home nginx \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log
 

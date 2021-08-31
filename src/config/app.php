@@ -177,6 +177,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\GatewayServiceProvider::class,
         App\Providers\ObadaServiceProvider::class,
+        App\Services\DeviceService\ServiceProvider::class,
 
     ],
 

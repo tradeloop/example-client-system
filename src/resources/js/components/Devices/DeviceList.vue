@@ -20,7 +20,6 @@
                 <th>Manufacturer</th>
                 <th>Owner</th>
                 <th>Local</th>
-                <th>Obit</th>
                 <th>Blockchain</th>
             </tr>
             </thead>

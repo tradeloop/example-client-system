@@ -465,8 +465,7 @@ export default {
 
 
 
-            } else
-            {
+            } else {
                 console.log(this.deviceForm);
                 swal("Error!", "Something went wrong trying to save the device", "error");
             }

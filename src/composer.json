@@ -33,7 +33,8 @@
         "fzaninotto/faker": "^1.9.1",
         "mockery/mockery": "1.2.2",
         "nunomaduro/collision": "^4.1",
-        "phpunit/phpunit": "^8.5"
+        "phpunit/phpunit": "^8.5",
+        "timacdonald/log-fake": "^1.9"
     },
     "config": {
         "optimize-autoloader": true,

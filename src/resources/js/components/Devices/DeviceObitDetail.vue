@@ -30,26 +30,7 @@
                         <button @click="mapData()"  data-toggle="tooltip" data-placement="top" title="Map Obit To Inventory" class="btn-round btn btn-outline-warning"><i class="fa fa-arrow-up"></i> Update Local Inventory</button>
                     </div>
                     <div class="btn-holder" v-if="!localHashMatch && device !== null">
-                        <button @click="createObit"  data-toggle="tooltip" data-placement="top" v-bind:title="obit == null?'Create A Local Obit':'Update Local Obit'" class=" btn-round btn btn-outline-warning"><i class="fa fa-arrow-down"></i> {{obit == null?'Create A Local Obit':'Update Local Obit'}}</button>
-                    </div>
-                </div>
-                <div class="outer-row">
-                    <div class="title-bubble">Client Obit</div>
-                    <p>{{obitHash}}</p>
-                    <button class="btn btn-sm btn-primary btn-round btn-view" @click="currentView = 'obit_view'" v-if="hasObitHash">View</button>
-                </div>
-                <div class="action-row text-center">
-                    <div class="btn-holder"  v-if="blockchainHashMatch">
-                    <button data-toggle="tooltip" data-placement="top" title="Root Hashes Synced" class="btn-fab btn-round btn btn-success"><i class="fa fa-check"></i></button>
-                    </div>
-                    <div class="btn-holder" v-if="!blockchainHashMatch && blockChainObit !== null">
-                        <button @click="downloadObit()"  data-toggle="tooltip" data-placement="top" title="Download Obit From Blockchain" class="btn-round btn btn-outline-warning"><i class="fa fa-arrow-up"></i> Download From Blockchain</button>
-                    </div>
-                    <div class="btn-holder" v-if="!blockchainHashMatch && obit !== null" >
-                        <button @click="uploadObit()" data-toggle="tooltip" data-placement="top" title="Upload Obit To Blockchain" class=" btn-round btn btn-outline-warning"><i class="fa fa-arrow-down"></i> Upload To Blockchain</button>
-                    </div>
-                    <div class="btn-holder" v-if="obit == null && blockChainObit == null" >
-                        <button disabled data-toggle="tooltip" data-placement="top" title="Upload Obit To Blockchain" class="btn-fab btn-round btn btn-outline-danger"><i class="fa fa-times"></i></button>
+                        <button @click="uploadObit"  data-toggle="tooltip" data-placement="top" v-bind:title="obit == null?'Create Obit':'Update Obit'" class=" btn-round btn btn-outline-warning"><i class="fa fa-arrow-down"></i> {{obit == null?'Create Obit':'Update Obit'}}</button>
                     </div>
                 </div>
                 <div class="outer-row">

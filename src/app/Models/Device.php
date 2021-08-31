@@ -3,15 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Obada\Entities\LocalObit;
+use Obada\Entities\Obit;
 
 /**
  * Class Device
  * @package App\Models
  */
-class Device extends Model
-{
+class Device extends Model {
     protected $table = 'devices';
+
     public $timestamps = true;
 
     /*
@@ -134,21 +134,17 @@ class Device extends Model
         return $documents;
     }
 
-    public function getLocalObit()
-    {
-        return new LocalObit([
-            'owner' => $this->owner,
-            'obitStatus' => $this->status,
-            'manufacturer' => $this->manufacturer,
-            'partNumber' => $this->part_number,
-            'serialNumber' => $this->serial_number,
-            'metadata' => $this->getMetadataRecords(),
-            'documents' => [],
-            'structuredData' => [],
-            'modifiedOn' => (new \DateTime($this->updated_at))->getTimestamp()
+    public function getLocalObit() {
+        return new Obit([
+            'ownerDid'         => $this->owner,
+            'status'           => $this->status,
+            'manufacturer'     => $this->manufacturer,
+            'partNumber'       => $this->part_number,
+            'serialNumberHash' => hash('sha256', $this->serial_number),
+            'metadata'         => $this->getMetadataRecords(),
+            'documents'        => [],
+            'structuredData'   => [],
+            'modifiedOn'       => (new \DateTime($this->updated_at))->getTimestamp()
         ]);
     }
-
-
-
 }

@@ -11,7 +11,6 @@ export default {
     },
     mounted: function () {
         this.getDevice();
-        this.getObit();
         this.getBlockchainObit();
     },
     computed:{
@@ -144,7 +143,6 @@ export default {
             .then((response) => {
                 this.isLoading = false;
                 this.getDevice();
-                this.getObit();
                 swal("Done!", "Local Obit saved.", "success");
             })
             .catch((e) => {
@@ -219,7 +217,6 @@ export default {
                 .then((response) => {
                     this.isLoading = false;
                     this.getDevice();
-                    this.getObit();
                     swal("Done!", "Obit data added to Local Inventory", "success");
 
                 })
