@@ -201,7 +201,7 @@ class DeviceController extends Controller
         $input = $request->input();
 
         try {
-            $result = ObadaClient::generateObitDef($input['manufacturer'],$input['part_number'], $input['serial_number']);
+            $result = ObadaClient::generateObitDef($input['manufacturer'], $input['part_number'], $input['serial_number']);
             return response()->json([
                 'status' => 0,
                 'usn' => $result['obit']

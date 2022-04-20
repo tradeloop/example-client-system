@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: dev.rd.obada.io
 
   vars:
     deployment_path: .
