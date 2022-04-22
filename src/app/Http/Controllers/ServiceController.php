@@ -1,4 +1,6 @@
-<?php /** @noinspection ALL */
+<?php
+
+/** @noinspection ALL */
 
 namespace App\Http\Controllers;
 
@@ -21,12 +23,4 @@ use Log;
 
 class ServiceController extends Controller
 {
-
-
-
-
-
 }
-
-
-//ed92bd9cb904074ac01be4875da7818341eaa0c5afeb21623ac2927eb8ead205

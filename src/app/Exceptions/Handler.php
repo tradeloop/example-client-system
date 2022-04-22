@@ -36,10 +36,8 @@ class Handler extends ExceptionHandler
      */
     public function report(Throwable $exception)
     {
-        if (! in_array(config('app.env'), ['testing', 'local'])) {
-            if ($this->shouldReport($exception) && app()->bound('sentry')) {
-                app('sentry')->captureException($exception);
-            }
+        if (! in_array(config('app.env'), ['testing', 'local']) && ($this->shouldReport($exception) && app()->bound('sentry'))) {
+            app('sentry')->captureException($exception);
         }
 
         parent::report($exception);

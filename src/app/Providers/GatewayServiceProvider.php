@@ -16,7 +16,8 @@ class GatewayServiceProvider extends BaseServiceProvider
      *
      * @return void
      */
-    public function boot(): void {
+    public function boot(): void
+    {
     }
 
     /**
@@ -24,12 +25,13 @@ class GatewayServiceProvider extends BaseServiceProvider
      *
      * @return void
      */
-    public function register(): void {
-        $this->app->bind(ObitApi::class, function() {
-            $configuration = (new Configuration)
+    public function register(): void
+    {
+        $this->app->bind(ObitApi::class, function () {
+            $configuration = (new Configuration())
                 ->setHost(config('gateway.gateway_host'));
 
-            return new ObitApi(new Client, $configuration);
+            return new ObitApi(new Client(), $configuration);
         });
     }
 }

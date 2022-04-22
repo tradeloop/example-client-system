@@ -25,7 +25,7 @@ class ObadaServiceProvider extends ServiceProvider
             );
         });
 
-        App::bind('obada_client',function() {
+        App::bind('obada_client', function () {
             return new ObitApi(
                 new Client(),
                 (new Configuration())->setHost('client-helper')

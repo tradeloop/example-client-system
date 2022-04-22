@@ -21,7 +21,7 @@ class CreateDevicesTable extends Migration
             $table->string('serial_number');
             $table->string('usn');
             $table->string('obit_did');
-            $table->enum('status',['FUNCTIONAL','NON_FUNCTIONAL','DISPOSED','STOLEN','DISABLED_BY_OWNER']);
+            $table->enum('status', ['FUNCTIONAL','NON_FUNCTIONAL','DISPOSED','STOLEN','DISABLED_BY_OWNER']);
             $table->timestamps();
         });
     }

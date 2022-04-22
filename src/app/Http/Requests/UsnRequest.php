@@ -24,9 +24,9 @@ class UsnRequest extends FormRequest
     public function rules()
     {
         return [
-            'manufacturer'=>'required|string|max:255',
-            'part_number'=>'required|string|max:255',
-            'serial_number'=>'required|string|max:255'
+            'manufacturer' => 'required|string|max:255',
+            'part_number' => 'required|string|max:255',
+            'serial_number' => 'required|string|max:255'
         ];
     }
 }

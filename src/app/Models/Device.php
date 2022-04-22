@@ -17,16 +17,19 @@ class Device extends Model
     /*
      * Relationships
      */
-    public function documents(){
-        return $this->hasMany(Documents::class,'device_id','id');
+    public function documents()
+    {
+        return $this->hasMany(Documents::class, 'device_id', 'id');
     }
 
-    public function metadata(){
-        return $this->hasMany(Metadata::class,'device_id','id');
+    public function metadata()
+    {
+        return $this->hasMany(Metadata::class, 'device_id', 'id');
     }
 
-    public function structured_data(){
-        return $this->hasMany(StructuredData::class,'device_id','id');
+    public function structured_data()
+    {
+        return $this->hasMany(StructuredData::class, 'device_id', 'id');
     }
 
     /*
@@ -40,8 +43,8 @@ class Device extends Model
     public function getMetadataRecords()
     {
         $metadata = [];
-        if($this->metadata) {
-            foreach($this->metadata as $m) {
+        if ($this->metadata) {
+            foreach ($this->metadata as $m) {
                 $metadata[] = $m->getLocalMetadata();
             }
         }
@@ -56,11 +59,11 @@ class Device extends Model
     {
         $structured_data = [];
 
-        if($this->structured_data) {
-            foreach($this->structured_data as $s) {
+        if ($this->structured_data) {
+            foreach ($this->structured_data as $s) {
                 $structured_data[] = [
-                    'key'=>$s->structured_data_type_id,
-                    'value'=>@json_encode(@json_decode($s->data_array,true))
+                    'key' => $s->structured_data_type_id,
+                    'value' => @json_encode(@json_decode($s->data_array, true))
                 ];
             }
         }
@@ -75,11 +78,11 @@ class Device extends Model
     {
         $documents = [];
 
-        if($this->documents) {
-            foreach($this->documents as $d) {
+        if ($this->documents) {
+            foreach ($this->documents as $d) {
                 $documents[] = [
-                    'name'=>$d->doc_type_id,
-                    'hash_link'=>$d->doc_path
+                    'name' => $d->doc_type_id,
+                    'hash_link' => $d->doc_path
                 ];
             }
         }
@@ -94,8 +97,8 @@ class Device extends Model
     public function getMetadataArray()
     {
         $metadata = [];
-        if($this->metadata) {
-            foreach($this->metadata as $m) {
+        if ($this->metadata) {
+            foreach ($this->metadata as $m) {
                 $metadata[$m->metadata_type_id] = $m->data_txt == null ? ($m->data_int == null ? $m->data_fp : $m->data_int) : $m->data_txt;
             }
         }
@@ -110,9 +113,9 @@ class Device extends Model
     {
         $structured_data = [];
 
-        if($this->structured_data) {
-            foreach($this->structured_data as $s) {
-                $structured_data[$s->structured_data_type_id]=@json_decode($s->data_array,true);
+        if ($this->structured_data) {
+            foreach ($this->structured_data as $s) {
+                $structured_data[$s->structured_data_type_id] = @json_decode($s->data_array, true);
             }
         }
         return $structured_data;
@@ -126,9 +129,9 @@ class Device extends Model
     {
         $documents = [];
 
-        if($this->documents) {
-            foreach($this->documents as $d) {
-                $documents[$d->doc_type_id]=$d->doc_path;
+        if ($this->documents) {
+            foreach ($this->documents as $d) {
+                $documents[$d->doc_type_id] = $d->doc_path;
             }
         }
         return $documents;
@@ -148,7 +151,4 @@ class Device extends Model
             'modifiedOn' => (new \DateTime($this->updated_at))->getTimestamp()
         ]);
     }
-
-
-
 }
