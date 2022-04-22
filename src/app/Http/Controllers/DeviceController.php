@@ -34,7 +34,11 @@ class DeviceController extends Controller
         $input = $request->input();
 
         try {
-            $result = $this->helperApi->generateObitDef($input['manufacturer'], $input['part_number'], $input['serial_number']);
+            $result = $this->helperApi->generateObitDef(
+                $input['manufacturer'],
+                $input['part_number'],
+                $input['serial_number']
+            );
 
             $usn = $result['obit'];
         } catch (\Exception $e) {
@@ -200,10 +204,15 @@ class DeviceController extends Controller
         $input = $request->input();
 
         try {
-            $result = ObadaClient::generateObitDef($input['manufacturer'], $input['part_number'], $input['serial_number']);
+            $result = ObadaClient::generateObitDef(
+                $input['manufacturer'],
+                $input['part_number'],
+                $input['serial_number']
+            );
+
             return response()->json([
                 'status' => 0,
-                'usn' => $result['obit']
+                'usn'    => $result['obit']
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
@@ -392,6 +401,7 @@ class DeviceController extends Controller
     }
 
     /**
+     * phpcs:ignore
      * Creates or Updates the Client Obit with the data retrieved from the Blockchain using the Obada PHP Client Library.
      * Takes the Obit_DID as input.
      *
@@ -529,13 +539,12 @@ class DeviceController extends Controller
 
         if ($client_obit['structuredData'] && is_array($client_obit['structuredData'])) {
             foreach ($client_obit['structuredData'] as $key => $value) {
-                $structured_data = $device->structured_data()->where([
-                    'structured_data_type_id' => $key
-                ])->first();
+                $structured_data = $device->structuredData()
+                    ->where('structured_data_type_id', $key)
+                    ->first();
 
-                $schema = Schema::where([
-                    'name' => $key
-                ])->first();
+                $schema = Schema::where('name', $key)->first();
+
                 if (!$schema) {
                     $schema = Schema::where(['name' => 'Other'])->first();
                 }

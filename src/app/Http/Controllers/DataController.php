@@ -29,7 +29,7 @@ class DataController extends Controller
      * @return \Illuminate\Http\JsonResponse
      * @throws Exception
      */
-    public function get_devices_data(Datatables $datatables)
+    public function getDevicesData(Datatables $datatables)
     {
         return $datatables->eloquent(Device::orderBy('id', 'asc'))
             ->rawColumns(['id', 'manufacturer','part_number','serial_number','owner'])
@@ -68,7 +68,7 @@ class DataController extends Controller
      * @return \Illuminate\Http\JsonResponse
      * @throws Exception
      */
-    public function get_obits_data(Datatables $datatables)
+    public function getObitsData(Datatables $datatables)
     {
         $result = $this->helperApi->getClientObits();
         $obits = collect($result->getObits())

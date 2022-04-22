@@ -27,7 +27,7 @@ class Device extends Model
         return $this->hasMany(Metadata::class, 'device_id', 'id');
     }
 
-    public function structured_data()
+    public function structuredData()
     {
         return $this->hasMany(StructuredData::class, 'device_id', 'id');
     }
@@ -99,7 +99,9 @@ class Device extends Model
         $metadata = [];
         if ($this->metadata) {
             foreach ($this->metadata as $m) {
-                $metadata[$m->metadata_type_id] = $m->data_txt == null ? ($m->data_int == null ? $m->data_fp : $m->data_int) : $m->data_txt;
+                $metadata[$m->metadata_type_id] = $m->data_txt == null
+                    ? ($m->data_int == null ? $m->data_fp : $m->data_int)
+                    : $m->data_txt;
             }
         }
         return $metadata;
