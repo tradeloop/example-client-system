@@ -37,6 +37,9 @@ services:
     image: obada/reference-design:develop
     container_name: reference-design
     volumes:
+{% if app_env == 'local' %}
+      - ./src:/app
+{% endif %}
       - ./etc/.env:/app/.env
     restart: always
     networks:

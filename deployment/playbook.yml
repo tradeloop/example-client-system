@@ -1,5 +1,5 @@
 ---
-- hosts: dev.rd.obada.io
+- hosts: all
 
   vars:
     deployment_path: .
@@ -48,7 +48,7 @@
         pull: yes
         files:
           - docker-compose.yml
-        recreate: smart
+        recreate: always
 
     - name: "Execute database migrations"
       shell: |
