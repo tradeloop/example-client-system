@@ -17,11 +17,8 @@ use Obada\ClientHelper\ObitDid;
 
 class DeviceController extends Controller
 {
-    protected $helperApi;
-
-    public function __construct(HelperApi $helperApi)
+    public function __construct(protected HelperApi $helperApi)
     {
-        $this->helperApi = $helperApi;
     }
 
     /**
@@ -224,10 +221,8 @@ class DeviceController extends Controller
 
     /**
      * Returns Device object based on device_id
-     *
-     * @return Device | JsonResponse
      */
-    public function getDevice($obit_did)
+    public function getDevice($obit_did): \App\Models\Device|\Illuminate\Http\JsonResponse
     {
         $device = Device::with('metadata', 'metadata.schema', 'documents', 'structured_data')->where([
             'obit_did' => $obit_did
@@ -257,10 +252,8 @@ class DeviceController extends Controller
 
     /**
      * Returns Device object based on device_id
-     *
-     * @return Device | JsonResponse
      */
-    public function getDeviceWithId($id)
+    public function getDeviceWithId($id): \App\Models\Device|\Illuminate\Http\JsonResponse
     {
         $device = Device::with('metadata', 'metadata.schema', 'documents', 'structured_data')->find($id);
         if (!$device) {
@@ -287,10 +280,8 @@ class DeviceController extends Controller
 
     /**
      * Returns Obit object based on usn
-     *
-     * @return ClientObit | JsonResponse
      */
-    public function getObit(Request $request, $obit_did)
+    public function getObit(Request $request, $obit_did): \ClientObit|\Illuminate\Http\JsonResponse
     {
         try {
             $result = $this->helperApi->getClientObit($obit_did);
@@ -362,7 +353,7 @@ class DeviceController extends Controller
                 'status' => 0,
                 'obit' => $result['blockchainObit']
             ], 200);
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return response()->json([
                 'status' => 1,
                 'errorMessage' => 'Error Getting Blockchain Obit'

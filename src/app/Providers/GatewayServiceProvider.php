@@ -13,8 +13,6 @@ class GatewayServiceProvider extends BaseServiceProvider
 {
     /**
      * Bootstrap the application services.
-     *
-     * @return void
      */
     public function boot(): void
     {
@@ -22,8 +20,6 @@ class GatewayServiceProvider extends BaseServiceProvider
 
     /**
      * Register the application services.
-     *
-     * @return void
      */
     public function register(): void
     {

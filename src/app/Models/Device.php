@@ -63,7 +63,7 @@ class Device extends Model
             foreach ($this->structured_data as $s) {
                 $structured_data[] = [
                     'key' => $s->structured_data_type_id,
-                    'value' => @json_encode(@json_decode($s->data_array, true))
+                    'value' => @json_encode(@json_decode($s->data_array, true, 512, JSON_THROW_ON_ERROR), JSON_THROW_ON_ERROR)
                 ];
             }
         }
@@ -117,7 +117,7 @@ class Device extends Model
 
         if ($this->structured_data) {
             foreach ($this->structured_data as $s) {
-                $structured_data[$s->structured_data_type_id] = @json_decode($s->data_array, true);
+                $structured_data[$s->structured_data_type_id] = @json_decode($s->data_array, true, 512, JSON_THROW_ON_ERROR);
             }
         }
         return $structured_data;

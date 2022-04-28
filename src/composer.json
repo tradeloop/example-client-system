@@ -9,19 +9,20 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/obada-foundation/node-api-library.git"
+            "url": "https://github.com/obada-foundation/client-api-library-php.git"
         }
     ],
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
+        "aws/aws-sdk-php": "^3.158",
+        "aws/aws-sdk-php-laravel": "^3.6",
+        "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.2",
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7",
-        "aws/aws-sdk-php": "^3.158",
-        "aws/aws-sdk-php-laravel": "^3.6",
-        "fruitcake/laravel-cors": "^2.0",
+        "obada-foundation/client-api-library-php": "dev-main",
         "sentry/sentry-laravel": "^2.0",
         "tuupola/base58": "^2.1",
         "yajra/laravel-datatables-oracle": "~9.0"

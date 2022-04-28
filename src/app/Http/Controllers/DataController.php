@@ -13,19 +13,12 @@ use Exception;
 
 class DataController extends Controller
 {
-    protected $obitApi;
-
-    protected $helperApi;
-
-    public function __construct(ObitApi $obitApi, HelperApi $helperApi)
+    public function __construct(protected ObitApi $obitApi, protected HelperApi $helperApi)
     {
-        $this->obitApi = $obitApi;
-        $this->helperApi = $helperApi;
     }
 
     /**
      * Returns Devices in a Datatables format.
-     * @param DataTables $datatables
      * @return \Illuminate\Http\JsonResponse
      * @throws Exception
      */
@@ -37,7 +30,7 @@ class DataController extends Controller
                 try {
                     $result = $this->helperApi->generateRootHash($device->getLocalObit());
                     return $result['rootHash'];
-                } catch (\Exception $e) {
+                } catch (\Exception) {
                     return '';
                 }
             })
@@ -46,7 +39,7 @@ class DataController extends Controller
                 try {
                     $result = $this->helperApi->getClientObit($device->obit_did);
                     return $result['obit']['rootHash'];
-                } catch (\Exception $e) {
+                } catch (\Exception) {
                     return '';
                 }
             })
@@ -55,7 +48,7 @@ class DataController extends Controller
                 try {
                     $result = $this->helperApi->fetchObitFromChain($device->obit_did);
                     return $result['blockchainObit']['rootHash'];
-                } catch (\Exception $e) {
+                } catch (\Exception) {
                     return '';
                 }
             })
@@ -64,7 +57,6 @@ class DataController extends Controller
 
     /**
      * Returns Obits in a DataTables format
-     * @param DataTables $datatables
      * @return \Illuminate\Http\JsonResponse
      * @throws Exception
      */

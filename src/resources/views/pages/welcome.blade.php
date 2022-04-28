@@ -38,9 +38,9 @@
                         <h3 class="text-center">Blockchain Tools</h3>
                         <p class="text-center">Tools to help integrate and debug OBADA.</p>
                         <ul class="bullet-list">
-                            <li><b><a href="https://gateway.obada.io">Blockchain Explorer<a/></b></li>
-                            <li><b><a href="/generate/usn">Obit Generator Tool</a></b> - demonstrates creation of an obit and a USN.</li>
-                            <li><b><a href="/generate/hashing">Hashing Tools</a></b> - demonstrates how the document and root hash are generated.</li>
+                            <li><b><a href="http://explorer.alpha.obada.io">Blockchain Explorer<a/></b></li>
+                            <li><b><a href="{{ route('generate.usn.index') }}">Obit Generator Tool</a></b> - demonstrates creation of an obit and a USN.</li>
+                            <li><b><a href="{{ route('generate.checksum.index') }}">Obit Checksum Generator</a></b> - demonstrates how the obit checksum is generated.</li>
                         </ul>
                     </div>
 

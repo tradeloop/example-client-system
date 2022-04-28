@@ -1,4 +1,4 @@
-@extends('layouts.app',['body_class'=>'landing-page'])
+@extends('layouts.app',['body_class' => 'landing-page'])
 
 @section('head')
     <title>Generate USN</title>
@@ -9,7 +9,7 @@
 @endsection
 
 @section('content')
-    @include('common.nav',['fixed'=>false])
+    @include('common.nav',['fixed' => false])
     <div class="main">
         <div class="container">
             <h1 class="text-center">Generate USN</h1>
@@ -17,7 +17,6 @@
                 <usn-generator></usn-generator>
             </section>
         </div>
-
     </div>
     @include('common.footer')
 @endsection

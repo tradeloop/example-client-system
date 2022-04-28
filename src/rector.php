@@ -3,21 +3,14 @@
 declare(strict_types=1);
 
 use Rector\Core\Configuration\Option;
-use Rector\Php74\Rector\Property\TypedPropertyRector;
 use Rector\Php71\Rector\ClassConst\PublicConstantVisibilityRector;
 use Rector\Php70\Rector\Ternary\TernaryToNullCoalescingRector;
 use Rector\Php53\Rector\Ternary\TernaryToElvisRector;
 use Rector\Php56\Rector\FuncCall\PowToExpRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\PostRector\Rector\NameImportingPostRector;
-use Rector\Laravel\Set\LaravelSetList;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use Rector\Renaming\Rector\Name\RenameClassRector;
 use Rector\DeadCode\Rector\FunctionLike\RemoveCodeAfterReturnRector;
-use Rector\Set\ValueObject\SetList;
-//use Symplify\EasyCodingStandard\ValueObject\Set\SetList;
-use Rector\Renaming\Rector\MethodCall\RenameMethodRector;
-use Rector\Renaming\ValueObject\MethodCallRename;
 use Rector\CodeQuality\Rector\If_\SimplifyIfReturnBoolRector;
 use Rector\CodeQuality\Rector\If_\CombineIfRector;
 use Rector\CodingStyle\Rector\FuncCall\ConsistentImplodeRector;
@@ -29,7 +22,6 @@ use Rector\DeadCode\Rector\If_\SimplifyIfElseWithSameContentRector;
 use Rector\DeadCode\Rector\Cast\RecastingRemovalRector;
 use Rector\DeadCode\Rector\Assign\RemoveUnusedVariableAssignRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedConstructorParamRector;
-use Rector\DeadCode\Rector\PropertyProperty\RemoveNullPropertyInitializationRector;
 use Rector\DeadCode\Rector\Array_\RemoveDuplicatedArrayKeyRector;
 use Rector\DeadCode\Rector\Ternary\TernaryToBooleanOrFalseToBooleanAndRector;
 use Rector\DeadCode\Rector\FunctionLike\RemoveOverriddenValuesRector;
@@ -46,11 +38,9 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         __DIR__ . '/routes',
         __DIR__ . '/database',
     ]);
-    //$parameters->set(Option::AUTO_IMPORT_NAMES, true);
 
     // Define what rule sets will be applied
-    //$containerConfigurator->import(LevelSetList::UP_TO_PHP_74);
-    //$containerConfigurator->import(LaravelSetList::LARAVEL_80);
+    $containerConfigurator->import(LevelSetList::UP_TO_PHP_81);
 
     // get services (needed for register a single rule)
     $services = $containerConfigurator->services();

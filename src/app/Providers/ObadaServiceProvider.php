@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use GuzzleHttp\Client;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 use Obada\Api\HelperApi;
 use Obada\Api\ObitApi;
@@ -18,19 +17,15 @@ class ObadaServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(HelperApi::class, function () {
-            return new HelperApi(
-                new Client(),
-                (new Configuration())->setHost('node:3000')
-            );
-        });
+        $this->app->bind(ObitApi::class, fn() => new ObitApi(
+            new Client(),
+            (new Configuration())->setHost(config('client-helper.host'))
+        ));
 
-        App::bind('obada_client', function () {
-            return new ObitApi(
-                new Client(),
-                (new Configuration())->setHost('client-helper')
-            );
-        });
+        //App::bind('obada_client', fn() => new ObitApi(
+        //    new Client(),
+        //    (new Configuration())->setHost('client-helper')
+        //));
     }
 
     /**

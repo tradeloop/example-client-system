@@ -46,6 +46,17 @@ services:
       - backend
       - frontend
 
+  client-helper:
+    image: obada/client-helper:develop
+    container_name: client-helper
+    restart: always
+    volumes:
+      - ./client-helper/data:/home/obada/data
+    environment:
+      - DB_PATH=/home/obada/data
+    networks:
+      - backend
+
   db:
     image: mysql:8
     container_name: db
@@ -66,4 +77,3 @@ networks:
 
 volumes:
   db_data: {}
-  helper_data: {}
