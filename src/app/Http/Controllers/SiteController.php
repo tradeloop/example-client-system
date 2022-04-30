@@ -22,11 +22,6 @@ class SiteController extends Controller
         return view('pages.welcome', $this->getData([]));
     }
 
-    public function deviceList(Request $request)
-    {
-        return view('pages.devices', $this->getData([]));
-    }
-
     public function obitsList(Request $request)
     {
         return view('pages.obits', $this->getData([]));

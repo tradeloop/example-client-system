@@ -12,7 +12,16 @@ use Obada\Entities\LocalObit;
 class Device extends Model
 {
     protected $table = 'devices';
+
     public $timestamps = true;
+
+    protected $guarded = [];
+
+    public function scopeByUsn($query, string $usn) {
+        $query->where('usn', $usn);
+
+        return $query;
+    }
 
     /*
      * Relationships
@@ -32,44 +41,6 @@ class Device extends Model
         return $this->hasMany(StructuredData::class, 'device_id', 'id');
     }
 
-    /*
-     * Methods
-     */
-
-    /**
-     * Returns Device Metadata in an array format.
-     * @return array
-     */
-    public function getMetadataRecords()
-    {
-        $metadata = [];
-        if ($this->metadata) {
-            foreach ($this->metadata as $m) {
-                $metadata[] = $m->getLocalMetadata();
-            }
-        }
-        return $metadata;
-    }
-
-    /**
-     * Returns device structured data in an array format
-     * @return array
-     */
-    public function getStructuredDataRecords()
-    {
-        $structured_data = [];
-
-        if ($this->structured_data) {
-            foreach ($this->structured_data as $s) {
-                $structured_data[] = [
-                    'key' => $s->structured_data_type_id,
-                    'value' => @json_encode(@json_decode($s->data_array, true, 512, JSON_THROW_ON_ERROR), JSON_THROW_ON_ERROR)
-                ];
-            }
-        }
-        return $structured_data;
-    }
-
     /**
      * Returns device documents in an array format
      * @return array
@@ -81,7 +52,7 @@ class Device extends Model
         if ($this->documents) {
             foreach ($this->documents as $d) {
                 $documents[] = [
-                    'name' => $d->doc_type_id,
+                    'name'      => $d->doc_type_id,
                     'hash_link' => $d->doc_path
                 ];
             }

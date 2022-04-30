@@ -2674,12 +2674,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/obada-foundation/client-api-library-php.git",
-                "reference": "368bd5b9176b5b3efb4c94d40f39cb5d9e4cddf6"
+                "reference": "a597e7f3dd8d86045facc19835b34af4df0a0fad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/obada-foundation/client-api-library-php/zipball/368bd5b9176b5b3efb4c94d40f39cb5d9e4cddf6",
-                "reference": "368bd5b9176b5b3efb4c94d40f39cb5d9e4cddf6",
+                "url": "https://api.github.com/repos/obada-foundation/client-api-library-php/zipball/a597e7f3dd8d86045facc19835b34af4df0a0fad",
+                "reference": "a597e7f3dd8d86045facc19835b34af4df0a0fad",
                 "shasum": ""
             },
             "require": {
@@ -2730,7 +2730,7 @@
                 "source": "https://github.com/obada-foundation/client-api-library-php/tree/main",
                 "issues": "https://github.com/obada-foundation/client-api-library-php/issues"
             },
-            "time": "2022-04-28T09:40:05+00:00"
+            "time": "2022-04-30T10:50:47+00:00"
         },
         {
             "name": "php-http/client-common",

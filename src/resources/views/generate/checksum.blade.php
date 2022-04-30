@@ -13,7 +13,9 @@
     <div class="main">
         <div class="container">
             <h1 class="text-center">Generate Checksum</h1>
-            <p class="text-center">Coming Soon!</p>
+            <section class="py-5 my-5">
+                <checksum-generator submit-url="{{ route('generate.checksum.compute') }}"></checksum-generator>
+            </section>
         </div>
 
     </div>

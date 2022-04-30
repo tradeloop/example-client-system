@@ -7,12 +7,12 @@ namespace App\Http\Handlers\Generate\Usn;
 use App\Http\Handlers\Handler;
 use App\Http\Requests\ComputeUsnRequest;
 use Obada\ClientHelper\GenerateObitDIDRequest;
-use Obada\Api\ObitApi;
+use Obada\Api\UtilsApi;
 use Throwable;
 use Log;
 
 class Compute extends Handler {
-    public function __invoke(ComputeUsnRequest $request, ObitApi $api)
+    public function __invoke(ComputeUsnRequest $request, UtilsApi $api)
     {
         try {
             $resp = $api->generateDID(
