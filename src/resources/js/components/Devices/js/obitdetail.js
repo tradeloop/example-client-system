@@ -1,8 +1,9 @@
 export default {
-    props:['is_mobile','events','usn'],
+    props:['is_mobile', 'events', 'usn','loadObitUrl', 'syncObitUrl'],
     data: function () {
         return {
-            obit: null,
+            localObit: null,
+            blockchainObit: null,
             isLoading: true
         };
     },
@@ -14,13 +15,11 @@ export default {
     },
     methods: {
         getObit: function(){
-            axios.get('/api/internal/obit/'+this.usn, {}).then((response) => {
+            axios.get(this.loadObitUrl, {}).then((response) => {
                 if(response.data.status == 0) {
                     this.isLoading = false;
-                    this.obit = response.data.obit;
-                    this.obit.metadata = JSON.parse(this.obit.metadata);
-                    this.obit.documents = JSON.parse(this.obit.documents);
-                    this.obit.structured_data = JSON.parse(this.obit.structured_data);
+                    this.localObit = response.data.obit;
+                    this.localObit.documents = [];//JSON.parse(this.obit.documents);
                 }
             }).catch((e) => {
                 this.isLoading = false;
@@ -45,14 +44,7 @@ export default {
         syncData: function(){
             if(this.isLoading) return;
             this.isLoading = true;
-            axios('/api/internal/obit/sync', {
-                method:'post',
-                data: {
-                    usn: this.obit.usn
-                },
-                responseType: 'json',
-            })
-                .then((response) => {
+            axios.get(this.syncObitUrl, {}).then((response) => {
                     this.isLoading = false;
                     swal("Done!", "Obit synched to the blockchain.", "success");
                 })
@@ -71,15 +63,15 @@ export default {
             axios('/api/internal/obit', {
                 method:'post',
                 data: {
-                    obitDID: this.obit.obitDID
+                    obitDID: this.localObit.obitDID
                 },
                 responseType: 'json',
             })
             .then((response) => {
-                this.obit = response.data.client_obit;
-                this.obit.metadata = JSON.parse(this.obit.metadata);
-                this.obit.documents = JSON.parse(this.obit.documents);
-                this.obit.structured_data = JSON.parse(this.obit.structured_data);
+                this.localObit = response.data.client_obit;
+                this.localObit.metadata = {}; //JSON.parse(this.obit.metadata);
+                this.localObit.documents = {}; //JSON.parse(this.obit.documents);
+                this.localObit.structured_data = {}; //JSON.parse(this.obit.structured_data);
                 swal("Done!", "Obit downloaded form blockchain.", "success");
             })
             .catch((e) => {
@@ -96,7 +88,7 @@ export default {
             axios('/api/internal/obit/device', {
                 method:'post',
                 data: {
-                    usn: this.obit.usn
+                    usn: this.localObit.usn
                 },
                 responseType: 'json',
             })

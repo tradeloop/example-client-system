@@ -20,7 +20,7 @@ class CreateDevicesTable extends Migration
             $table->string('serial_number');
             $table->string('usn');
             $table->string('obit_did');
-            $table->string('obit_checksum');
+            $table->string('obit_checksum')->nullable();
             $table->timestamps();
         });
     }

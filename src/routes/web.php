@@ -18,15 +18,20 @@ Route::get('/', 'SiteController@welcome');
 //Route::get('/devices/{obit_did}', 'SiteController@deviceObitDetail');
 Route::get('/devices/{device_id}/edit', 'SiteController@editDevice');
 
-Route::get('/obits', 'SiteController@obitsList');
-Route::get('/obits/{obit_id}', 'SiteController@obitDetail');
+//Route::get('/obits', 'SiteController@obitsList');
+//Route::get('/obits/{obit_id}', 'SiteController@obitDetail');
 Route::get('/retrieve/obit', 'SiteController@retrieveObit');
 
 Route::namespace('\App\Http\Handlers\Obits')
     ->name('obits.')
     ->prefix('obits')
     ->group(function () {
+        Route::get('/', \Index::class)->name('index');
+        Route::get('/load-all', \LoadAll::class)->name('load-all');
         Route::post('/', \Store::class)->name('store');
+        Route::get('/{key}', \Show::class)->name('show');
+        Route::get('/{key}/load', \Load::class)->name('load');
+        Route::get('/{key}/sync', \Sync::class)->name('sync');
     });
 
 Route::namespace('\App\Http\Handlers\Devices')

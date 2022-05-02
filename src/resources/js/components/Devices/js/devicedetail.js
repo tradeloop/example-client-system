@@ -51,7 +51,7 @@ export default {
             axios(this.storeObitUrl, {
                 method:'post',
                 data: {
-                    device_id: parseInt(this.device_id)
+                    device_id: this.device_id
                 },
                 responseType: 'json',
             })

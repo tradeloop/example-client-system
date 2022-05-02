@@ -31,22 +31,22 @@
         </ul>
         <table v-if="device != null" class="table table-bordered">
             <tbody>
-                <tr v-show="device.obit">
+                <tr v-show="device.obit_checksum">
                     <td>
                         Obit Exists. <a v-bind:href="'/obits/'+device.usn">View Obit {{ device.obit }}</a>
                     </td>
                 </tr>
-                <tr  v-show="device.obit">
+                <tr  v-show="device.obit_checksum">
                     <td>
                         <button class="btn btn-primary btn-round" @click="createObit">UPDATE OBIT</button>
                     </td>
                 </tr>
-                <tr v-show="device.obit == null">
+                <tr v-show="device.obit_checksum == null">
                     <td class="text-right">
                         Obit Does Not Exist.
                     </td>
                 </tr>
-                <tr v-show="device.obit == null">
+                <tr v-show="device.obit_checksum == null">
                     <td class="text-right">
                         <button class="btn btn-primary btn-round" @click="createObit">CREATE OBIT</button>
                     </td>

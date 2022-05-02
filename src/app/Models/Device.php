@@ -23,6 +23,12 @@ class Device extends Model
         return $query;
     }
 
+    public function scopeHasLocalObits($query) {
+        $query->whereNotNull('obit_checksum');
+
+        return $query;
+    }
+
     /*
      * Relationships
      */
