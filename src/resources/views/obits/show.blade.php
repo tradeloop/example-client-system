@@ -1,4 +1,4 @@
-@extends('layouts.app',['body_class'=>'landing-page'])
+@extends('layouts.app',['body_class' => 'landing-page'])
 
 @section('head')
     <title>OBIT Detail</title>
@@ -16,12 +16,12 @@
     @include('common.nav',['fixed' => false])
     <div class="main">
         <div class="container">
-            <h1 class="text-center">OBIT Detail</h1>
+            <h1 class="text-center">Client Helper (Wallet) > Obit Detail</h1>
             <section class="py-5 my-5">
                 <obit-detail 
                     :key="_usn" 
                     load-obit-url="{{ route('obits.load', $usn) }}" 
-                    sync-obit-url="{{ route('obits.sync', $usn) }}">
+                    to-chain-obit-url="{{ route('obits.to-chain', $usn) }}">
                 </obit-detail>
             </section>
         </div>
