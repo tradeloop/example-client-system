@@ -78,5 +78,21 @@ Route::namespace('\App\Http\Handlers\Generate')
             });
     });
 
+Route::namespace('\App\Http\Handlers\Login')
+    ->name('login.')
+    ->prefix('login')
+    ->group(function () {
+        Route::get('/', \Index::class)->name('index');
+        Route::post('/', \Authenticate::class)->name('auth');
+    });
+
+Route::namespace('\App\Http\Handlers\Register')
+    ->name('register.')
+    ->prefix('register')
+    ->group(function () {
+        Route::get('/', \Index::class)->name('index');
+        Route::post('/', \RegisterUser::class)->name('register-user');
+    });
+
 
 

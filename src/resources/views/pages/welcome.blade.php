@@ -18,22 +18,23 @@
             <section class="">
                 <div class="row">
                     <div class="col-12">
-                        <h1 class="text-center">OBADA Prototype Changed</h1>
+                        <h1 class="text-center">OBADA Prototype</h1>
                     </div>
                 </div>
                 <div class="row pt-5">
-
-                    <div class="col-6">
-                        <h3 class="text-center">Inventory Manager</h3>
-                        <p class="text-center">An example application to demonstrate how to connect a local system to OBADA.</p>
-                        <ul class="bullet-list">
-                            <li><b><a href="/devices">Local Inventory List<a/></b>
-                            </li>
-                            <li><b><a href="/obits">Local Obit List<a/></b></li>
-                            <li><b><a href="{{ route('devices.create') }}">Add New Device</a></b></li>
-                            <li><b><a href="/generate/hashing">Import From Blockchain</a></b></li>
-                        </ul>
-                    </div>
+                    @if (Auth::check())
+                        <div class="col-6">
+                            <h3 class="text-center">Inventory Manager</h3>
+                            <p class="text-center">An example application to demonstrate how to connect a local system to OBADA.</p>
+                            <ul class="bullet-list">
+                                <li><b><a href="/devices">Local Inventory List<a/></b>
+                                </li>
+                                <li><b><a href="/obits">Local Obit List<a/></b></li>
+                                <li><b><a href="{{ route('devices.create') }}">Add New Device</a></b></li>
+                                <li><b><a href="/generate/hashing">Import From Blockchain</a></b></li>
+                            </ul>
+                        </div>
+                    @endif
                     <div class="col-6">
                         <h3 class="text-center">Blockchain Tools</h3>
                         <p class="text-center">Tools to help integrate and debug OBADA.</p>
@@ -44,9 +45,7 @@
                         </ul>
                     </div>
 
-
                     <div class="col-12">
-
                         <h2 class="">
                             OBADA sites and tools
                         </h2>
